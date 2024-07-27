@@ -3,6 +3,9 @@
 """A script that prints the pascal triangle of a given number"""
 
 def pascal_triangle(n):
+    """
+    Returns list of integers representing the pascal triangle
+    """
     if n <= 0:
         return []
 
