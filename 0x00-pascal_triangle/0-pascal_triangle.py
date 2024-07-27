@@ -1,3 +1,7 @@
+
+
+"""A script that prints the pascal triangle of a given number"""
+
 def pascal_triangle(n):
     if n <= 0:
         return []
