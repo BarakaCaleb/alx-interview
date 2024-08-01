@@ -7,7 +7,7 @@ def check(keys, l):
     for i in range(l):
         if keys[i] != 1:
             return 0
-    return 1
+    return (1)
 
 
 def helper(boxes, index, keys):
@@ -19,10 +19,10 @@ def helper(boxes, index, keys):
                 keys[i] = 1
                 ret = helper(boxes, i, keys)
                 ret = check(keys, len(boxes))
-    return ret
+    return (ret)
 
 
-def can_unlock_all(boxes):
+def canUnlockAll(boxes):
     """ Determines if all boxes of a box list can be opened."""
     keys = [0] * len(boxes)
     for i in range(len(boxes)):
@@ -31,7 +31,7 @@ def can_unlock_all(boxes):
     if len(boxes):
         keys[0] = 1
     else:
-        return True
+        return (True)
     for i in boxes[0]:
         if i < len(boxes):
             if keys[i] == 0:
@@ -39,6 +39,6 @@ def can_unlock_all(boxes):
                 ret = helper(boxes, i, keys)
                 ret = check(keys, len(boxes))
     if ret == 1 or len(boxes) == 1:
-        return True
+        return (True)
     else:
-        return False
+        return (False)
