@@ -1,34 +1,57 @@
-def minOperations(n):
+#!/usr/bin/python3
+"""
+This module contains the minOperations function that calculates
+the fewest number of operations needed to result in exactly n H
+characters in the file.
+"""
+
+
+def next_operation(
+                   target: int,
+                   operations: int,
+                   current_characters: int,
+                   add_by: int
+                   ) -> int:
     """
-    Calculate the minimum number of operations required to achieve exactly n 'H' characters
-    in a file using only "Copy All" and "Paste" operations.
-
-    The function uses prime factorization to determine the number of operations needed. Each
-    prime factor of the target number `n` corresponds to a number of operations: the prime
-    factor itself is added to the operation count each time it divides `n`.
-
-    Parameters:
-    n (int): The target number of 'H' characters to achieve.
-
+    Recursive function to calculate the next operation
+    Args:
+        target (int): The target number of characters
+        operations (int): The number of operations
+        current_characters (int): The current number of characters
+        add_by (int): The number of characters to add by
     Returns:
-    int: The minimum number of operations needed to reach exactly `n` characters.
-         Returns 0 if `n` is 1 or less (no operations needed).
+        int: The number of operations
     """
-    # If n is 1 or less, no operations are needed because we start with 1 character.
+    if target == current_characters:
+        return operations
+
+    if target % current_characters == 0:
+        return next_operation(
+                              target,
+                              operations + 2,
+                              current_characters * 2,
+                              current_characters
+                              )
+
+    return next_operation(
+                          target,
+                          operations + 1,
+                          current_characters + add_by,
+                          add_by
+                          )
+
+
+def minOperations(n: int) -> int:
+    """
+    Calculates the fewest number of operations needed to result in
+    exactly n H characters in the file.
+    Args:
+        n (int): The target number of characters
+    Returns:
+        int: The fewest number of operations needed to result in
+            exactly n H characters in the file.
+    """
     if n <= 1:
         return 0
 
-    # Initialize the count of operations and the factor to start checking from
-    operations = 0
-    factor = 2
-    
-    # While there are still factors to process in n
-    while n > 1:
-        # While factor divides n, add the factor to operations and divide n
-        while n % factor == 0:
-            operations += factor
-            n //= factor
-        # Move to the next factor
-        factor += 1
-
-    return operations
+    return next_operation(n, 2, 2, 1)
