@@ -41,7 +41,7 @@ def next_operation(
                           )
 
 
-def minOperations(n: int) -> int:
+def min_operations(n: int) -> int:
     """
     Calculates the fewest number of operations needed to result in
     exactly n H characters in the file.
