@@ -2,45 +2,30 @@
 
 const request = require('request');
 
-// Get the movieID from the command line arguments
-const movieID = process.argv[2];
+const movieId = process.argv[2];
+const movieEndpoint = 'https://swapi-api.alx-tools.com/api/films/' + movieId;
 
-// Check if a movie ID was provided
-if (!movieId) {
-  console.error('Usage: ./0-starwars_characters.js <Movie ID>');
-  process.exit(1);
+function sendRequest (characterList, index) {
+  if (characterList.length === index) {
+    return;
+  }
+
+  request(characterList[index], (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(JSON.parse(body).name);
+      sendRequest(characterList, index + 1);
+    }
+  });
 }
 
-// API URL for the specific movie
-const url = `https://swapi.dev/api/films/${movieId}/`;
-
-// Make a request to the Star Wars API for the movie
-request(url, (error, response, body) => {
+request(movieEndpoint, (error, response, body) => {
   if (error) {
-    console.error('Error:', error);
-    return;
-  }
-  
-  if (response.statusCode !== 200) {
-    console.error(`Error: Unable to fetch movie with ID ${movieId}`);
-    return;
-  }
+    console.log(error);
+  } else {
+    const characterList = JSON.parse(body).characters;
 
-  // Parse the JSON response
-  const filmData = JSON.parse(body);
-  const characters = filmData.characters;
-
-  // For each character URL, make a request to get their name
-  characters.forEach(characterUrl => {
-    request(characterUrl, (charError, charResponse, charBody) => {
-      if (charError) {
-        console.error('Error:', charError);
-        return;
-      }
-      
-      // Parse the character data and print the name
-      const charData = JSON.parse(charBody);
-      console.log(charData.name);
-    });
-  });
+    sendRequest(characterList, 0);
+  }
 });
