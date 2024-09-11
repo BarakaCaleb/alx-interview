@@ -1,20 +1,59 @@
 #!/usr/bin/python3
+"""_summary_
 """
-Matrix Rotation"""
 
-# Rotating a 2D matrix 90 degrees clockwise
-# The first step is to transpose the matrix
-# The second step is to reverse the rows of the transposed matrix
-# Transpose: matrix[i][j] = matrix[j][i] invlove swapping of rows and columns
-# Reverse: matrix[i][j] = matrix[i][n-1-j] involves swapping of elements
+
+def transpose_matrix(matrix, n):
+    """_summary_
+
+    Args:
+                    matrix (_type_): _description_
+    """
+    for i in range(n):
+        for j in range(i, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+
+def reverse_matrix(matrix):
+    """_summary_
+
+    Args:
+                    matrix (_type_): _description_
+    """
+    for row in matrix:
+        row.reverse()
+
 
 def rotate_2d_matrix(matrix):
-    """Rotates a 2D matrix 90 degrees clockwise in place."""
-    # Step 1: Transpose the matrix(SWAP ROWS AND COLUMNS)
+    """_summary_
+
+    Args:
+                    matrix (_type_): _description_
+    """
     n = len(matrix)
-    for i in range(n):
-        for j in range(i + 1, n):
-            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-    # Step 2: Reverse each Row to get the Rotated matrix in clockwise direction
-    for i in range(n):
-        matrix[i].reverse
+    # print(n)
+
+    """sample matrix
+    1 2 3
+    4 5 6
+    7 8 9
+    """
+
+    # transpose matrix
+    """
+    1 4 7
+    2 5 8
+    3 6 9
+    """
+
+    transpose_matrix(matrix, n)
+
+    # reverse matrix
+    """
+    7 4 1
+    8 5 2
+    9 6 3
+    """
+    reverse_matrix(matrix)
+
+    return matrix
